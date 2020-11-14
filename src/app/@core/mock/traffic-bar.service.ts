@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
-import { of as observableOf,  Observable } from 'rxjs';
-import { PeriodsService } from './periods.service';
-import { TrafficBarData, TrafficBar } from '../data/traffic-bar';
+import {Injectable} from '@angular/core';
+import {Observable, of as observableOf} from 'rxjs';
+import {PeriodsService} from './periods.service';
+import {TrafficBar, TrafficBarData} from '../data/traffic-bar';
 
 @Injectable()
 export class TrafficBarService extends TrafficBarData {
 
-  private data = { };
+  private data = {};
 
   constructor(private period: PeriodsService) {
     super();
@@ -21,23 +21,35 @@ export class TrafficBarService extends TrafficBarData {
     return {
       data: [10, 15, 19, 7, 20, 13, 15],
       labels: this.period.getWeeks(),
-      formatter: '{c0} MB',
+      formatter: '{c0} $',
     };
   }
 
   getDataForMonthPeriod(): TrafficBar {
     return {
-      data: [0.5, 0.3, 0.8, 0.2, 0.3, 0.7, 0.8, 1, 0.7, 0.8, 0.6, 0.7],
+      data: [
+        0.5 * 1000,
+        0.3 * 1000,
+        0.8 * 1000,
+        0.2 * 1000,
+        0.3 * 1000,
+        0.7 * 1000,
+        0.8 * 1000,
+        1000,
+        0.7 * 1000,
+        0.8 * 1000,
+        0.6 * 1000,
+        0.7 * 1000],
       labels: this.period.getMonths(),
-      formatter: '{c0} GB',
+      formatter: '{c0} $',
     };
   }
 
   getDataForYearPeriod(): TrafficBar {
     return {
-      data: [10, 15, 19, 7, 20, 13, 15, 19, 11],
+      data: [10 * 1000, 15 * 1000, 19 * 1000, 7 * 1000, 20 * 1000, 13 * 1000, 15 * 1000, 19 * 1000, 11 * 1000],
       labels: this.period.getYears(),
-      formatter: '{c0} GB',
+      formatter: '{c0} $',
     };
   }
 

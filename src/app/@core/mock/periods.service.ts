@@ -4,30 +4,30 @@ import { Injectable } from '@angular/core';
 export class PeriodsService {
   getYears() {
     return [
-      '2010', '2011', '2012',
-      '2013', '2014', '2015',
-      '2016', '2017', '2018',
+      '2020', '2019', '2018',
+      '2017', '2016', '2015',
+      '2014', '2013', '2012',
     ];
   }
 
   getMonths() {
     return [
-      'Jan', 'Feb', 'Mar',
-      'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep',
-      'Oct', 'Nov', 'Dec',
+      'Янв', 'Фев', 'Мар',
+      'Апр', 'Май', 'Июн',
+      'Июл', 'Авг', 'Сен',
+      'Окт', 'Ноя', 'Дек',
     ];
   }
 
   getWeeks() {
     return [
-      'Mon',
-      'Tue',
-      'Wed',
-      'Thu',
-      'Fri',
-      'Sat',
-      'Sun',
+      'Пн',
+      'Вт',
+      'Ср',
+      'Чт',
+      'Пт',
+      'Сб',
+      'Вс',
     ];
   }
 }

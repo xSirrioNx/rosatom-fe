@@ -13,6 +13,13 @@ export interface TrafficList {
     nextDate: string;
     nextValue: number;
   };
+  jobs: [
+    {
+      name: string;
+      changed: string;
+      value: number;
+    }
+  ];
 }
 
 export abstract class TrafficListData {

@@ -13,9 +13,4 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/what-if',
     home: true,
   },
-  /*{
-    title: 'IoT Dashboard',
-    icon: 'home-outline',
-    link: '/pages/iot-dashboard',
-  },*/
 ];

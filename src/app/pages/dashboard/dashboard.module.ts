@@ -1,69 +1,54 @@
-import { NgModule } from '@angular/core';
-import {
-  NbActionsModule,
-  NbButtonModule,
-  NbCardModule,
-  NbTabsetModule,
-  NbUserModule,
-  NbRadioModule,
-  NbSelectModule,
-  NbListModule,
-  NbIconModule,
-} from '@nebular/theme';
-import { NgxEchartsModule } from 'ngx-echarts';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { ThemeModule } from '../../@theme/theme.module';
-import { DashboardComponent } from './dashboard.component';
-import { StatusCardComponent } from './status-card/status-card.component';
-import { ContactsComponent } from './contacts/contacts.component';
-import { RoomsComponent } from './rooms/rooms.component';
-import { RoomSelectorComponent } from './rooms/room-selector/room-selector.component';
-import { TemperatureComponent } from './temperature/temperature.component';
-import { TemperatureDraggerComponent } from './temperature/temperature-dragger/temperature-dragger.component';
-import { KittenComponent } from './kitten/kitten.component';
-import { SecurityCamerasComponent } from './security-cameras/security-cameras.component';
-import { ElectricityComponent } from './electricity/electricity.component';
-import { ElectricityChartComponent } from './electricity/electricity-chart/electricity-chart.component';
-import { WeatherComponent } from './weather/weather.component';
-import { SolarComponent } from './solar/solar.component';
-import { PlayerComponent } from './rooms/player/player.component';
-import { TrafficComponent } from './traffic/traffic.component';
-import { TrafficChartComponent } from './traffic/traffic-chart.component';
-import { FormsModule } from '@angular/forms';
+import {DashboardRoutingModule} from './dashboard-routing.module';
+import {DashboardComponent} from './dashboard.component';
+import {
+  NbAccordionModule,
+  NbCardModule,
+  NbDatepickerModule,
+  NbIconModule,
+  NbInputModule,
+  NbListModule,
+  NbSelectModule
+} from '@nebular/theme';
+import {FormsModule as ngFormsModule} from '@angular/forms';
+import {NgxEchartsModule} from 'ngx-echarts';
+import {ChartjsPieComponent} from './components/chartjs-pie.component';
+import {CostsBarChartComponent} from './components/costs-card/back-side/costs-bar-chart.component';
+import {CostsBackCardComponent} from './components/costs-card/back-side/costs-back-card.component';
+import {CostsFrontCardComponent} from './components/costs-card/front-side/costs-front-card.component';
+import {CostsCardsHeaderComponent} from './components/costs-card/costs-cards-header/costs-cards-header.component';
+import {CostsCardComponent} from './components/costs-card/costs-card.component';
+import {CostsBarComponent} from './components/costs-card/front-side/costs-bar/costs-bar.component';
+import {ChartModule} from 'angular2-chartjs';
+
 
 @NgModule({
-  imports: [
-    FormsModule,
-    ThemeModule,
-    NbCardModule,
-    NbUserModule,
-    NbButtonModule,
-    NbTabsetModule,
-    NbActionsModule,
-    NbRadioModule,
-    NbSelectModule,
-    NbListModule,
-    NbIconModule,
-    NbButtonModule,
-    NgxEchartsModule,
-  ],
   declarations: [
     DashboardComponent,
-    StatusCardComponent,
-    TemperatureDraggerComponent,
-    ContactsComponent,
-    RoomSelectorComponent,
-    TemperatureComponent,
-    RoomsComponent,
-    KittenComponent,
-    SecurityCamerasComponent,
-    ElectricityComponent,
-    ElectricityChartComponent,
-    WeatherComponent,
-    PlayerComponent,
-    SolarComponent,
-    TrafficComponent,
-    TrafficChartComponent,
+    CostsCardComponent,
+    CostsBarChartComponent,
+    CostsFrontCardComponent,
+    CostsBackCardComponent,
+    CostsBarComponent,
+    CostsCardsHeaderComponent,
+    ChartjsPieComponent
+  ],
+  imports: [
+    CommonModule,
+    DashboardRoutingModule,
+    NbDatepickerModule,
+    NbInputModule,
+    NbCardModule,
+    ngFormsModule,
+    NbSelectModule,
+    NbIconModule,
+    NbListModule,
+    NgxEchartsModule,
+    ChartModule,
+    NbAccordionModule,
   ],
 })
-export class DashboardModule { }
+export class DashboardModule {
+}

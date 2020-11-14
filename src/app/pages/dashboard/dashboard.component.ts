@@ -1,103 +1,32 @@
-import {Component, OnDestroy} from '@angular/core';
-import { NbThemeService } from '@nebular/theme';
-import { takeWhile } from 'rxjs/operators' ;
-import { SolarData } from '../../@core/data/solar';
-
-interface CardSettings {
-  title: string;
-  iconClass: string;
-  type: string;
-}
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {NbDateService} from '@nebular/theme';
 
 @Component({
   selector: 'ngx-dashboard',
-  styleUrls: ['./dashboard.component.scss'],
   templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnDestroy {
+export class DashboardComponent implements OnInit {
 
-  private alive = true;
+  min: Date;
+  max: Date;
+  @Output() periodChange = new EventEmitter<string>();
 
-  solarValue: number;
-  lightCard: CardSettings = {
-    title: 'Light',
-    iconClass: 'nb-lightbulb',
-    type: 'primary',
-  };
-  rollerShadesCard: CardSettings = {
-    title: 'Roller Shades',
-    iconClass: 'nb-roller-shades',
-    type: 'success',
-  };
-  wirelessAudioCard: CardSettings = {
-    title: 'Wireless Audio',
-    iconClass: 'nb-audio',
-    type: 'info',
-  };
-  coffeeMakerCard: CardSettings = {
-    title: 'Coffee Maker',
-    iconClass: 'nb-coffee-maker',
-    type: 'warning',
-  };
+  @Input() type: string = 'week';
 
-  statusCards: string;
+  types: string[] = ['week', 'month', 'year'];
+  currentTheme: string;
 
-  commonStatusCardsSet: CardSettings[] = [
-    this.lightCard,
-    this.rollerShadesCard,
-    this.wirelessAudioCard,
-    this.coffeeMakerCard,
-  ];
-
-  statusCardsByThemes: {
-    default: CardSettings[];
-    cosmic: CardSettings[];
-    corporate: CardSettings[];
-    dark: CardSettings[];
-    'material-dark': CardSettings[];
-    'material-light': CardSettings[];
-  } = {
-    default: this.commonStatusCardsSet,
-    cosmic: this.commonStatusCardsSet,
-    corporate: [
-      {
-        ...this.lightCard,
-        type: 'warning',
-      },
-      {
-        ...this.rollerShadesCard,
-        type: 'primary',
-      },
-      {
-        ...this.wirelessAudioCard,
-        type: 'danger',
-      },
-      {
-        ...this.coffeeMakerCard,
-        type: 'info',
-      },
-    ],
-    dark: this.commonStatusCardsSet,
-    'material-dark': this.commonStatusCardsSet,
-    'material-light': this.commonStatusCardsSet,
-  };
-
-  constructor(private themeService: NbThemeService,
-              private solarService: SolarData) {
-    this.themeService.getJsTheme()
-      .pipe(takeWhile(() => this.alive))
-      .subscribe(theme => {
-        this.statusCards = this.statusCardsByThemes[theme.name];
-    });
-
-    this.solarService.getSolarData()
-      .pipe(takeWhile(() => this.alive))
-      .subscribe((data) => {
-        this.solarValue = data;
-      });
+  constructor(protected dateService: NbDateService<Date>) {
+    this.min = this.dateService.addDay(this.dateService.today(), -5);
+    this.max = this.dateService.addDay(this.dateService.today(), 5);
   }
 
-  ngOnDestroy() {
-    this.alive = false;
+  ngOnInit(): void {
+  }
+
+  changePeriod(period: string): void {
+    this.type = period;
+    this.periodChange.emit(period);
   }
 }
