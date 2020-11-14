@@ -9,6 +9,7 @@
         *ngFor="let item of opened | async; index as i;"
         [parent]="item"
         [depthLevel]="i"
+        (dataFetched)="onDataFetched()"
       ></ngx-jobs-grid>
     </nb-card-body>
   </nb-card>

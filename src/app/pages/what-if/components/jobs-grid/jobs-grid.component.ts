@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {WhatIfService} from '../../what-if.service';
 import {WorkDto} from '../../models/work.dto';
 import {LocalDataSource} from 'ng2-smart-table';
@@ -14,6 +14,7 @@ export class JobsGridComponent implements OnInit {
   @Input() parent: WorkDto;
   @Input() levelSum = 1;
   @Input() depthLevel;
+  @Output() dataFetched: EventEmitter<any> = new EventEmitter();
   selected = this.whatIfService.selected;
   opened = this.whatIfService.opened;
   mockData;
@@ -86,6 +87,7 @@ export class JobsGridComponent implements OnInit {
         });
         this.source.load(result);
       }
+      this.dataFetched.emit(null);
     });
   }
 

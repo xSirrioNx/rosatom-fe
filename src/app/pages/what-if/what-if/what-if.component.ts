@@ -16,7 +16,6 @@ export class WhatIfComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.data = this.whatIfService.mockData;
   }
 
   getData(item: any) {
@@ -27,5 +26,13 @@ export class WhatIfComponent implements OnInit {
 
   getLevelSum(item: number) {
     return this.getData(item).reduce((sum, x) => (sum + x.currentCost + x.childrenCost), 0);
+  }
+
+  onDataFetched() {
+    setTimeout(() =>
+        document.getElementsByTagName('nb-card-body')[0].scrollTo(100000 * 100000, 100000 * 100000),
+      100,
+    );
+
   }
 }

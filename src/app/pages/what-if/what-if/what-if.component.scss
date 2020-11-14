@@ -15,4 +15,8 @@
     flex-grow: 1;
     height: calc(100% - 10px);
   }
+
+  nb-card-body {
+    scroll-behavior: smooth;
+  }
 }
