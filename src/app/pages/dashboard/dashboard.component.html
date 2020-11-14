@@ -1,8 +1,5 @@
 <div class="header">
   <h3>Обзор проекта</h3>
-  <!--<nb-select matRipple [selected]="type" (selectedChange)="changePeriod($event)">
-    <nb-option matRipple *ngFor="let period of types" [value]="period">{{ period }}</nb-option>
-  </nb-select>-->
 </div>
 <hr>
 
@@ -11,7 +8,13 @@
     <ngx-costs-card></ngx-costs-card>
   </div>
   <div class="col-xxl-4">
-    <nb-card>
+    <nb-card size="tiny">
+      <nb-card-header>Суммарные потери</nb-card-header>
+      <nb-card-body>
+        <h1 class="text-warning"> {{ 1354686 | currency }}</h1>
+      </nb-card-body>
+    </nb-card>
+    <nb-card size="small">
       <nb-card-header>Сводка по работам</nb-card-header>
       <nb-card-body>
         <ngx-chartjs-pie></ngx-chartjs-pie>

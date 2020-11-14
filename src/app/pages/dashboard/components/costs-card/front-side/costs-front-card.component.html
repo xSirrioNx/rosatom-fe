@@ -1,21 +1,8 @@
-<!--<nb-list>
-  <nb-list-item class="item" *ngFor="let item of frontCardData; trackBy: trackByDate">
-    <span>{{ item.date }}</span>
-    <span>{{ item.value }}</span>
-    <span class="delta" [class.up]="item.delta.up" [class.down]="!item.delta.up">
-      <nb-icon [icon]="item.delta.up ? 'arrow-up' : 'arrow-down'" pack="eva"></nb-icon>
-      {{ item.delta.value }}%
-    </span>
-    <ngx-traffic-bar [barData]="item.comparison" [successDelta]="item.delta.up">
-    </ngx-traffic-bar>
-  </nb-list-item>
-</nb-list>-->
-
 <nb-accordion multi>
   <nb-accordion-item *ngFor="let item of frontCardData; trackBy: trackByDate">
     <nb-accordion-item-header class="item" >
       <span>{{ item.date }}</span>
-      <span>{{ item.value }}</span>
+      <span>{{ item.value | currency }}</span>
       <span class="delta" [class.up]="!item.delta.up" [class.down]="item.delta.up">
       <nb-icon [icon]="item.delta.up ? 'arrow-up' : 'arrow-down'" pack="eva"></nb-icon>
         {{ item.delta.value }}%
@@ -28,7 +15,7 @@
         <nb-list-item class="item" *ngFor="let job of item.jobs;">
           <span>{{ job.name }}</span>
           <span>{{ job.changed }}</span>
-          <span style="text-align: right;">{{ job.value }}</span>
+          <span style="text-align: right;" [class.up]="job.value > 0" [class.down]="job.value < 0">{{  job.value | currency }}</span>
         </nb-list-item>
       </nb-list>
     </nb-accordion-item-body>

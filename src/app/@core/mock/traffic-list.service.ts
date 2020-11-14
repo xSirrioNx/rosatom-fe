@@ -77,17 +77,17 @@ export class TrafficListService extends TrafficListData {
           {
             name: 'Работа ' + this.getRandom(1000),
             changed: 'Начало: 14.11.20 -> 16.11.20',
-            value: this.getRandom(200),
+            value: this.getRandom(200) * (Math.random() < 0.5 ? -1 : 1),
           },
           {
             name: 'Работа ' + this.getRandom(1000),
             changed: `Длительность: ${this.getRandom(10)} -> ${this.getRandom(10)}`,
-            value: this.getRandom(200),
+            value: this.getRandom(200) * (Math.random() < 0.5 ? -1 : 1),
           },
           {
             name: 'Работа ' + this.getRandom(1000),
             changed: 'Начало: 20.11.20 -> 15.11.20',
-            value: this.getRandom(200),
+            value: this.getRandom(200) * (Math.random() < 0.5 ? -1 : 1) ,
           },
         ],
       };

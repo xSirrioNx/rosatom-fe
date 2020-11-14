@@ -2,11 +2,20 @@
 @import '~@nebular/theme/styles/global/breakpoints';
 @import '../../../../../@theme/styles/themes';
 
+
+nb-accordion {
+  @include nb-scrollbars(
+      nb-theme(card-scrollbar-color),
+      nb-theme(card-scrollbar-background-color),
+      nb-theme(card-scrollbar-width));
+}
+
 @include nb-install-component() {
   overflow: hidden;
 
   nb-accordion {
     height: 100%;
+    overflow: auto;
   }
 
   .item {
@@ -37,9 +46,18 @@
     }
   }
 
+
+
   @include media-breakpoint-down(is) {
     ngx-traffic-bar {
       display: none;
     }
   }
+}
+.down {
+  color: nb-theme(color-danger-default);
+}
+
+.up {
+  color: nb-theme(color-success-default);
 }
