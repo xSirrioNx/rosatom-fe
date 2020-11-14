@@ -1,0 +1,31 @@
+<div class="row" *ngIf="parentId">
+  <div class="col">
+    <h5>{{ parent.name }}</h5>
+  </div>
+</div>
+<div class="jobs-grid">
+  <div
+    *ngFor="let item of data; trackBy: trackByFn" (click)="onClick(item.id)"
+    [ngClass]="{
+      'selected': item.id === (selected | async),
+      'opened': (opened | async).includes(item.id)
+    }"
+  >
+    <div class="bg-wrapper"
+       [ngStyle]="
+         {
+          'background-color':  'rgba(240, 52, 52, ' + item.currentCost / levelSum * 2 + ')'
+         }
+       "></div>
+    <span>{{ item.name }}</span>
+    <nb-icon
+      class="toggle-icon"
+      pack="eva"
+      [icon]="(opened | async).includes(item.id) ? 'arrowhead-up' : 'arrowhead-down'"
+      (click)="onOpenClick(item.id, $event)"
+    ></nb-icon>
+
+    <nb-icon class="bounce" pack="eva" icon="bell-outline" *ngIf="item.oldCurrentCost"></nb-icon>
+  </div>
+</div>
+

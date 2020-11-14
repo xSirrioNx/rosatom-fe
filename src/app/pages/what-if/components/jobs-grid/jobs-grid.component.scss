@@ -1,0 +1,67 @@
+h5 {
+  margin-top: 16px;
+}
+.jobs-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-auto-rows: minmax(100px, auto);
+  gap: 20px;
+  > div {
+    border: 1px solid #c3c3c3;
+    border-radius: 2px;
+    cursor: pointer;
+    position: relative;
+    padding: 8px;
+
+    &.selected {
+      border-color: #81c784;
+      box-shadow: 0 0 10px rgba(129, 199, 132, 0.5);
+    }
+
+    &.opened {
+      border-color: #2e7d32;
+      box-shadow: 0 0 10px rgba(46, 125, 50, 0.5);
+    }
+
+    .toggle-icon {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+    }
+
+    .bounce {
+      animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+      transform: translate3d(0, 0, 0);
+      position: absolute;
+      right: 4px;
+      top: 4px;
+      //animation-iteration-count: infinite;
+    }
+
+    @keyframes shake {
+      10%, 90% {
+        transform: translate3d(-1px, 0, 0);
+      }
+
+      20%, 80% {
+        transform: translate3d(1px, 0, 0);
+      }
+
+      30%, 50%, 70% {
+        transform: translate3d(-2px, 0, 0);
+      }
+
+      40%, 60% {
+        transform: translate3d(2px, 0, 0);
+      }
+    }
+
+    .bg-wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+  }
+}

@@ -1,0 +1,86 @@
+<div class="info-wrapper">
+  <div class="info-content">
+    <nb-card>
+      <nb-card-body>
+        <div class="row">
+          <div class="col-6">
+            Название:
+          </div>
+          <div class="col-6">
+            {{ item.name }}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-6">
+            Дата старта:
+          </div>
+          <div class="col-6">
+            {{ item.startDate | date:'dd.MM.yyyy' }}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-6">
+            Длительность:
+          </div>
+          <div class="col-6">
+            {{ item.duration }}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-6">
+            Минимальная длительность:
+          </div>
+          <div class="col-6">
+            {{ item.minDuration }}
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+    <nb-card>
+      <nb-card-body>
+        <div class="row">
+          <div class="col-6">
+            Текущие потери:
+          </div>
+          <div class="col-6">
+            {{ item.oldCurrentCost ? item.oldCurrentCost : item.currentCost }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            Текущие потери зависимых работ:
+          </div>
+          <div class="col-6">
+            {{ item.childrenCost }}
+          </div>
+        </div>
+
+        <div class="row" *ngIf="item.oldCurrentCost">
+          <div class="col-6">
+            Возможные потери:
+          </div>
+          <div class="col-6">
+            {{ item.currentCost }}
+          </div>
+        </div>
+
+        <!--<nb-icon
+          class="close-icon"
+          pack="eva"
+          icon="close-outline"
+          (click)="onResetClick()"
+        ></nb-icon>-->
+
+        <nb-icon
+          class="edit-icon"
+          pack="eva"
+          icon="edit-outline"
+          (click)="onEditClick()"
+        ></nb-icon>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

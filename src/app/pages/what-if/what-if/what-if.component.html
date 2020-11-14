@@ -1,0 +1,21 @@
+<div class="full-height-content">
+  <nb-card size="giant" class="table-card">
+    <nb-card-header>
+      Что если?
+    </nb-card-header>
+
+    <nb-card-body>
+      <ngx-jobs-grid
+        *ngFor="let item of opened | async; index as i;"
+        [data]="getData(item)"
+        [parentId]="item"
+        [levelSum]="getLevelSum(item)"
+        [depthLevel]="i"
+      ></ngx-jobs-grid>
+    </nb-card-body>
+  </nb-card>
+
+  <div class="right-sidebar">
+    <ngx-job-info *ngIf="selected | async"></ngx-job-info>
+  </div>
+</div>

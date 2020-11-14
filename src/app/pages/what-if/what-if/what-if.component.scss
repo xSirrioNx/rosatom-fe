@@ -1,0 +1,17 @@
+.full-height-content {
+  display: flex;
+  height: calc(100vh - 132px);
+  min-height: calc(100vh - 132px);
+  width: 100%;
+
+  .right-sidebar {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+  }
+
+  nb-card {
+    flex-grow: 1;
+    height: calc(100% - 10px);
+  }
+}

@@ -1,0 +1,42 @@
+.info-wrapper {
+  display: flex;
+  padding-left: 20px;
+  //height: 100%;
+  width: 100%;
+
+  .info-content {
+    nb-card {
+      position: relative;
+    }
+
+    width: 100%;
+
+    .row {
+      margin-bottom: 8px;
+
+      .col-6 {
+        align-items: center;
+        display: flex;
+
+        &:last-of-type {
+          font-weight: 600;
+        }
+      }
+    }
+
+    .edit-icon {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      font-size: 20px;
+      cursor: pointer;
+    }
+    .close-icon {
+      position: absolute;
+      bottom: 8px;
+      left: 8px;
+      font-size: 20px;
+      cursor: pointer;
+    }
+  }
+}
