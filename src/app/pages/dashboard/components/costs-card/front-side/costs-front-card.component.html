@@ -2,7 +2,7 @@
   <nb-accordion-item *ngFor="let item of frontCardData; trackBy: trackByDate">
     <nb-accordion-item-header class="item" >
       <span>{{ item.date }}</span>
-      <span>{{ item.value | currency }}</span>
+      <span>{{ item.value | currency:'':'' + 'у.е.' }}</span>
       <span class="delta" [class.up]="!item.delta.up" [class.down]="item.delta.up">
       <nb-icon [icon]="item.delta.up ? 'arrow-up' : 'arrow-down'" pack="eva"></nb-icon>
         {{ item.delta.value }}%
@@ -15,7 +15,7 @@
         <nb-list-item class="item" *ngFor="let job of item.jobs;">
           <span>{{ job.name }}</span>
           <span>{{ job.changed }}</span>
-          <span style="text-align: right;" [class.up]="job.value > 0" [class.down]="job.value < 0">{{  job.value | currency }}</span>
+          <span style="text-align: right;" [class.up]="job.value > 0" [class.down]="job.value < 0">{{  job.value | currency:'':'' + 'у.е.' }}</span>
         </nb-list-item>
       </nb-list>
     </nb-accordion-item-body>

@@ -18,7 +18,7 @@
          }
        "></div>
     <div style="width: 100%">{{ item.jobName }}</div>
-    <div style="width: 100%">{{ item.totalCost | currency }}</div>
+    <div style="width: 100%">{{ item.totalCost | currency:'':'' + 'у.е.' }}</div>
     <nb-icon
       class="toggle-icon"
       pack="eva"
