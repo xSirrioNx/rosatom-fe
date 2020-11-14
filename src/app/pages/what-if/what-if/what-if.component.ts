@@ -21,8 +21,8 @@ export class WhatIfComponent implements OnInit {
 
   getData(item: any) {
     return this.data.filter(x => x.parentIds.includes(item)).sort((a, b) =>
-      ((b.currentCost + b.childrenCost) / this.getLevelSum(a)) -
-      ((a.currentCost + a.childrenCost) / this.getLevelSum(b)));
+      ((b.currentCost + b.childrenCost) / this.getLevelSum(b)) -
+      ((a.currentCost + a.childrenCost) / this.getLevelSum(a)));
   }
 
   getLevelSum(item: number) {
