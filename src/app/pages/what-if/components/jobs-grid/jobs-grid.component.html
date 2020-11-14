@@ -1,31 +1,31 @@
-<div class="row" *ngIf="parentId">
+<div class="row" *ngIf="parent.id">
   <div class="col">
-    <h5>{{ parent.name }}</h5>
+    <h5>{{ parent.jobName }}</h5>
   </div>
 </div>
-<div class="jobs-grid">
+<div class="jobs-grid" *ngIf="data.length < 251">
   <div
-    *ngFor="let item of data; trackBy: trackByFn" (click)="onOpenClick(item.id, $event)"
+    *ngFor="let item of data; trackBy: trackByFn; index as i;" (click)="onOpenClick(item, $event)"
     [ngClass]="{
       'selected': item.id === (selected | async),
-      'opened': (opened | async).includes(item.id)
+      'opened': isOpened(item)
     }"
   >
     <div class="bg-wrapper"
        [ngStyle]="
          {
-          'background-color':  'rgba(240, 52, 52, ' + (item.currentCost + item.childrenCost) / levelSum + ')'
+          'background-color':  'rgba(240, 52, 52, ' + item.totalCost / levelSum + ')'
          }
        "></div>
-    <div style="width: 100%">{{ item.name }}</div>
-    <div style="width: 100%">{{ (item.currentCost + item.childrenCost) | currency }}</div>
+    <div style="width: 100%">{{ item.jobName }}</div>
+    <div style="width: 100%">{{ item.totalCost | currency }}</div>
     <nb-icon
       class="toggle-icon"
       pack="eva"
-      [icon]="(opened | async).includes(item.id) ? 'arrowhead-up' : 'arrowhead-down'"
+      [icon]="isOpened(item) ? 'arrowhead-up' : 'arrowhead-down'"
     ></nb-icon>
 
-    <nb-icon class="bounce" pack="eva" icon="bell-outline" *ngIf="item.oldCurrentCost"></nb-icon>
+    <nb-icon class="bounce" pack="eva" icon="bell-outline" *ngIf="item.newAddedCost"></nb-icon>
   </div>
 </div>
-
+<ng2-smart-table *ngIf="data.length > 250" [settings]="tableSettings" [source]="source" (rowSelect)="onRowSelect($event)">

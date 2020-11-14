@@ -10,7 +10,7 @@ import {
   NbIconModule,
   NbInputModule,
   NbListModule,
-  NbSelectModule
+  NbSelectModule,
 } from '@nebular/theme';
 import {FormsModule as ngFormsModule} from '@angular/forms';
 import {NgxEchartsModule} from 'ngx-echarts';
@@ -33,7 +33,7 @@ import {ChartModule} from 'angular2-chartjs';
     CostsBackCardComponent,
     CostsBarComponent,
     CostsCardsHeaderComponent,
-    ChartjsPieComponent
+    ChartjsPieComponent,
   ],
   imports: [
     CommonModule,

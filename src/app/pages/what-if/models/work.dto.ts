@@ -10,9 +10,13 @@ export class WorkDto {
   minimalDurationCost: number;
   addedCost: number;
   newAddedCost: number;
+  addedChildrenCost: number;
   newAddedChildrenCost: number;
   nextWorks: WorkDto[];
   prevWorks: WorkDto[];
+  jobName: string;
+  levelCost?: number;
+  tmpTotalCost?: number;
 
   constructor(object: WorkDto) {
     if (object) {
@@ -39,6 +43,16 @@ export class WorkDto {
   }
 
   get totalCost(): number {
-    return this.newAddedCost || this.addedCost + this.newAddedChildrenCost || this.newAddedChildrenCost;
+    switch (true) {
+      case (!!this.newAddedCost && !!this.newAddedChildrenCost):
+        return this.newAddedCost + this.newAddedChildrenCost;
+      case (!!this.newAddedCost && !this.newAddedChildrenCost):
+        return this.newAddedCost + this.addedChildrenCost;
+      case (!this.newAddedCost && !!this.newAddedChildrenCost):
+        return this.addedCost + this.newAddedChildrenCost;
+      default:
+        return this.addedCost + this.addedChildrenCost;
+    }
+    // return (this.newAddedCost || this.newAddedChildrenCost) ? this.addedCost + this.newAddedChildrenCost || ;
   }
 }

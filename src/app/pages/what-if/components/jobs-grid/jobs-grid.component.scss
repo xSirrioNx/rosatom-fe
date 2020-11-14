@@ -13,15 +13,15 @@ h5 {
     position: relative;
     padding: 8px;
 
-    &.selected {
+    &.selected, &.opened {
       border-color: #81c784;
-      box-shadow: 0 0 10px rgba(129, 199, 132, 0.5);
+      box-shadow: 5px 5px 10px rgba(129, 199, 132, 0.5);
     }
 
-    &.opened {
+    /*&.opened {
       border-color: #2e7d32;
       box-shadow: 0 0 10px rgba(46, 125, 50, 0.5);
-    }
+    }*/
 
     .toggle-icon {
       position: absolute;
@@ -63,5 +63,11 @@ h5 {
       right: 0;
       bottom: 0;
     }
+  }
+}
+
+ng2-smart-table::ng-deep {
+  table tr.selected {
+    background-color: #81c784 !important;
   }
 }

@@ -1,0 +1,10 @@
+<div class="outer">
+  <div class="inner" [ngStyle]="
+         {
+          'background-color':  'rgba(240, 52, 52, ' + rowData.totalCost / rowData.levelCost + ')'
+         }
+       "
+  >
+    <nb-icon class="bounce" pack="eva" icon="bell-outline" *ngIf="rowData.newAddedCost"></nb-icon>
+  </div>
+</div>

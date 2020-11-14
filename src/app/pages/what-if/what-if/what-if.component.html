@@ -1,5 +1,5 @@
 <div class="full-height-content">
-  <nb-card class="table-card" >
+  <nb-card class="table-card" [nbSpinner]="loading | async" nbSpinnerStatus="danger">
     <nb-card-header>
       Планирование
     </nb-card-header>
@@ -7,9 +7,7 @@
     <nb-card-body>
       <ngx-jobs-grid
         *ngFor="let item of opened | async; index as i;"
-        [data]="getData(item)"
-        [parentId]="item"
-        [levelSum]="getLevelSum(item)"
+        [parent]="item"
         [depthLevel]="i"
       ></ngx-jobs-grid>
     </nb-card-body>

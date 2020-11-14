@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {WhatIfService} from '../../what-if.service';
 import {distinctUntilChanged} from 'rxjs/operators';
+import {WorkDto} from '../../models/work.dto';
 
 @Component({
   selector: 'ngx-job-info',
@@ -10,19 +11,21 @@ import {distinctUntilChanged} from 'rxjs/operators';
 export class JobInfoComponent implements OnInit {
 
   selected = this.whatIfService.selected;
-  data;
-  item;
-  constructor( private whatIfService: WhatIfService) { }
+  item: WorkDto;
+
+  constructor(private whatIfService: WhatIfService) {
+  }
 
   ngOnInit(): void {
-    this.whatIfService.mockData.subscribe(x => this.data = x);
+    // this.whatIfService.mockData.subscribe(x => this.data = x);
     this.selected.pipe(distinctUntilChanged()).subscribe(value => {
-      this.item = this.data.find(x => x.id === value)
+      this.item = value;
     });
 
   }
 
   onEditClick() {
+    return; /*
     const old = this.whatIfService.mockData.getValue();
     let toChange = old.find(x => x.id === 4);
     toChange.oldChildrenCost = toChange.childrenCost;
@@ -47,10 +50,6 @@ export class JobInfoComponent implements OnInit {
     toChange.childrenCost = toChange.childrenCost + 100000;
     toChange.oldCurrentCost = toChange.currentCost;
     toChange.currentCost = toChange.currentCost + 100000;
-    this.whatIfService.mockData.next(old);
-  }
-
-  onResetClick() {
-    this.whatIfService.mockData.next(this.whatIfService.MOCK_DATA);
+    this.whatIfService.mockData.next(old);*/
   }
 }

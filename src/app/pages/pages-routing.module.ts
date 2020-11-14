@@ -19,7 +19,7 @@ const routes: Routes = [{
     },
     {
       path: '',
-      redirectTo: 'what-if',
+      redirectTo: 'dashboard',
       pathMatch: 'full',
     },
   ],

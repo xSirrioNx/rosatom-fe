@@ -10,13 +10,13 @@ export class WhatIfComponent implements OnInit {
   data;
   opened = this.whatIfService.opened;
   selected = this.whatIfService.selected;
+  loading = this.whatIfService.loading;
 
   constructor(private whatIfService: WhatIfService) {
   }
 
   ngOnInit(): void {
     // this.data = this.whatIfService.mockData;
-    this.whatIfService.mockData.subscribe(x => this.data = x);
   }
 
   getData(item: any) {

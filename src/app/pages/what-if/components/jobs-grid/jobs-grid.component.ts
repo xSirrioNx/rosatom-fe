@@ -1,5 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {WhatIfService} from '../../what-if.service';
+import {WorkDto} from '../../models/work.dto';
+import {LocalDataSource} from 'ng2-smart-table';
+import {StatusColumnComponent} from './status-column/status-column.component';
+import {DateColumnComponent} from './date-column/date-column.component';
 
 @Component({
   selector: 'ngx-jobs-grid',
@@ -7,46 +11,96 @@ import {WhatIfService} from '../../what-if.service';
   styleUrls: ['./jobs-grid.component.scss'],
 })
 export class JobsGridComponent implements OnInit {
-  @Input() data: any[];
-  @Input() parentId;
-  @Input() levelSum;
+  @Input() parent: WorkDto;
+  @Input() levelSum = 1;
   @Input() depthLevel;
   selected = this.whatIfService.selected;
   opened = this.whatIfService.opened;
-  parent;
   mockData;
+  data: WorkDto[] = [];
+  source: LocalDataSource = new LocalDataSource();
+
+  tableSettings = {
+    actions: null,
+    columns: {
+      totalCost: {
+        title: 'Статус',
+        editable: false,
+        type: 'custom',
+        renderComponent: StatusColumnComponent,
+        filter: false,
+      },
+      jobName: {
+        title: 'Работа',
+        filter: true,
+        type: 'string',
+        editable: false,
+      },
+      addedCost: {
+        title: 'Текущая стоимость',
+        filter: false,
+        type: 'number',
+        editable: false,
+      },
+      addedChildrenCost: {
+        title: 'Стоимость зависимых работ',
+        filter: false,
+        type: 'number',
+        editable: false,
+      },
+      newAddedCost: {
+        title: 'Возможная стоимость',
+        filter: false,
+        type: 'number',
+        editable: false,
+      },
+      newAddedChildrenCost: {
+        title: 'Возможная стоимость зависимых работ',
+        filter: false,
+        type: 'number',
+        editable: false,
+      },
+      factStartDate: {
+        title: 'Фактическая дата старта',
+        filter: false,
+        type: 'custom',
+        editable: false,
+        renderComponent: DateColumnComponent,
+        filterFunction: (dir, a, b) => {
+          return dir ? a.getTime() - b.getTime() : b.getTime() - a.getTime();
+        },
+      },
+    },
+  };
 
   constructor(private whatIfService: WhatIfService) {
   }
 
   ngOnInit(): void {
-    this.whatIfService.mockData.subscribe(x => this.mockData = x);
-    if (this.parentId) {
-      this.parent = this.mockData.find(x => x.id === this.parentId);
-      this.whatIfService.getNodes(this.parent.id).subscribe(x => console.log(x));
-    } else {
-      this.whatIfService.getNodes(null).subscribe(x => console.log(x));
-    }
+    this.whatIfService.getNodes(this.parent.id).subscribe(result => {
+      this.data = result;
+      if (result.length > 250) {
+        const levelCost = result.reduce((sum, next) => sum + next.totalCost, 0);
+        result.forEach(y => {
+          y.levelCost = levelCost;
+        });
+        this.source.load(result);
+      }
+    });
   }
 
-  /*onClick(id) {
-    if (id !== this.whatIfService.selected.getValue()) {
-      this.whatIfService.selected.next(id);
-    } else {
-      this.whatIfService.selected.next(null);
+  onOpenClick(item: WorkDto, e?) {
+    this.whatIfService.selected.next(item);
+    if (e) {
+      e.stopPropagation();
     }
-  }*/
-
-  onOpenClick(id: any, e) {
-    this.whatIfService.selected.next(id);
-    e.stopPropagation();
     const newValue = this.whatIfService.opened.getValue();
     const lastId = newValue[newValue.length - 1];
-    if (lastId !== id) {
-      if (lastId !== this.parentId && newValue.length !== this.depthLevel + 1) {
+    if (lastId !== item.id) {
+      if (lastId !== this.parent.id && newValue.length !== this.depthLevel + 1) {
         newValue.length = this.depthLevel + 1;
       }
-      newValue.push(id);
+      newValue.push(item);
     } else {
       newValue.length = newValue.length - 1;
     }
@@ -56,5 +110,13 @@ export class JobsGridComponent implements OnInit {
 
   trackByFn(index, item) {
     return item.id + item.currentCost; // unique id corresponding to the item
+  }
+
+  isOpened(item: WorkDto) {
+    return this.opened.getValue().map(x => x.id).includes(item.id);
+  }
+
+  onRowSelect($event: any) {
+    this.onOpenClick($event.data);
   }
 }

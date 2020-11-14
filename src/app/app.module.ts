@@ -46,8 +46,8 @@ registerLocaleData(localeRu, 'ru');
   ],
   bootstrap: [AppComponent],
   providers: [
-    {provide: LOCALE_ID, useValue: 'ru'}
-  ]
+    {provide: LOCALE_ID, useValue: 'ru'},
+  ],
 })
 export class AppModule {
 }

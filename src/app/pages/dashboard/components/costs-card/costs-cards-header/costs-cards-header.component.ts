@@ -25,7 +25,7 @@ export class CostsCardsHeaderComponent implements OnDestroy {
       case 'year':
         return 'Год';
     }
-  };
+  }
 
   constructor(private themeService: NbThemeService) {
     this.themeService.getJsTheme()
