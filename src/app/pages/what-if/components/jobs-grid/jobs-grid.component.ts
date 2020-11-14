@@ -23,6 +23,9 @@ export class JobsGridComponent implements OnInit {
     this.whatIfService.mockData.subscribe(x => this.mockData = x);
     if (this.parentId) {
       this.parent = this.mockData.find(x => x.id === this.parentId);
+      this.whatIfService.getNodes(this.parent.id).subscribe(x => console.log(x));
+    } else {
+      this.whatIfService.getNodes(null).subscribe(x => console.log(x));
     }
   }
 

@@ -5,6 +5,7 @@ import {JobsGridComponent} from './components/jobs-grid/jobs-grid.component';
 import {JobInfoComponent} from './components/job-info/job-info.component';
 import {WhatIfRoutingModule} from './what-if-routing.module';
 import {NbCardModule, NbIconModule, NbSidebarModule} from '@nebular/theme';
+import {HttpClientModule} from '@angular/common/http';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import {NbCardModule, NbIconModule, NbSidebarModule} from '@nebular/theme';
     NbCardModule,
     NbIconModule,
     NbSidebarModule,
+    HttpClientModule,
   ],
 })
 export class WhatIfModule {
