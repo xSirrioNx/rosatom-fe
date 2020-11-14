@@ -8,14 +8,14 @@ const routes: Routes = [{
   component: PagesComponent,
   children: [
     {
-      path: 'what-if',
-      loadChildren: () => import('./what-if/what-if.module')
-        .then(m => m.WhatIfModule),
-    },
-    {
       path: 'dashboard',
       loadChildren: () => import('./dashboard/dashboard.module')
         .then(m => m.DashboardModule),
+    },
+    {
+      path: 'what-if',
+      loadChildren: () => import('./what-if/what-if.module')
+        .then(m => m.WhatIfModule),
     },
     {
       path: '',
