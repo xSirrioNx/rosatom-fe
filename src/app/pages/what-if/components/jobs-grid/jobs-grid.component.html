@@ -17,8 +17,8 @@
           'background-color':  'rgba(240, 52, 52, ' + (item.currentCost + item.childrenCost) / levelSum + ')'
          }
        "></div>
-    <span>{{ item.name }}</span>
-    <span>{{ (item.currentCost + item.childrenCost) | currency }}</span>
+    <div style="width: 100%">{{ item.name }}</div>
+    <div style="width: 100%">{{ (item.currentCost + item.childrenCost) | currency }}</div>
     <nb-icon
       class="toggle-icon"
       pack="eva"
