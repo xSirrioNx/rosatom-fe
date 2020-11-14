@@ -7,7 +7,7 @@ import {WhatIfService} from '../../what-if.service';
   styleUrls: ['./jobs-grid.component.scss'],
 })
 export class JobsGridComponent implements OnInit {
-  @Input() data;
+  @Input() data: any[];
   @Input() parentId;
   @Input() levelSum;
   @Input() depthLevel;
@@ -22,17 +22,17 @@ export class JobsGridComponent implements OnInit {
   ngOnInit(): void {
     this.whatIfService.mockData.subscribe(x => this.mockData = x);
     if (this.parentId) {
-      this.parent = this.mockData.find(x => x.id === this.parentId)
+      this.parent = this.mockData.find(x => x.id === this.parentId);
     }
   }
 
-  onClick(id) {
+  /*onClick(id) {
     if (id !== this.whatIfService.selected.getValue()) {
       this.whatIfService.selected.next(id);
     } else {
       this.whatIfService.selected.next(null);
     }
-  }
+  }*/
 
   onOpenClick(id: any, e) {
     this.whatIfService.selected.next(id);
