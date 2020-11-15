@@ -120,6 +120,10 @@ export class JobsGridComponent implements OnInit, AfterViewInit {
     });
   }
 
+  getColor(item) {
+    const color = 'rgba(240, 52, 52, ' + item.totalCost / this.levelSum + ')';
+  }
+
   private fetchData() {
     this.whatIfService.getNodes(this.parent.id).subscribe(result => {
       this.data = result;

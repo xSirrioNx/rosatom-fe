@@ -14,12 +14,13 @@
     <div class="bg-wrapper"
        [ngStyle]="
          {
-          'background-color':  'rgba(240, 52, 52, ' + item.totalCost / levelSum + ')'
+          'background-color':  getColor(item)
          }
        "></div>
     <div style="width: 100%">{{ item.jobName }}</div>
     <div style="width: 100%">{{ item.totalCost | currency:'':'' + 'у.е.' }}</div>
     <nb-icon
+      *ngIf="item.hasChildren"
       class="toggle-icon"
       pack="eva"
       [icon]="isOpened(item) ? 'arrowhead-up' : 'arrowhead-down'"

@@ -15,6 +15,7 @@ export class WorkDto {
   nextWorks: WorkDto[];
   prevWorks: WorkDto[];
   jobName: string;
+  hasChildren: boolean;
   levelCost?: number;
   tmpTotalCost?: number;
 
