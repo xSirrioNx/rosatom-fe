@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {WhatIfService} from '../../what-if.service';
 import {distinctUntilChanged} from 'rxjs/operators';
 import {WorkDto} from '../../models/work.dto';
+import {NbDialogService, NbGlobalPhysicalPosition, NbToastrService} from '@nebular/theme';
+import {EditDialogComponent} from '../edit-dialog/edit-dialog.component';
 
 @Component({
   selector: 'ngx-job-info',
@@ -13,7 +15,11 @@ export class JobInfoComponent implements OnInit {
   selected = this.whatIfService.selected;
   item: WorkDto;
 
-  constructor(private whatIfService: WhatIfService) {
+  constructor(
+    private whatIfService: WhatIfService,
+    private dialogService: NbDialogService,
+    private toastrService: NbToastrService,
+  ) {
   }
 
   ngOnInit(): void {
@@ -25,31 +31,38 @@ export class JobInfoComponent implements OnInit {
   }
 
   onEditClick() {
-    return; /*
-    const old = this.whatIfService.mockData.getValue();
-    let toChange = old.find(x => x.id === 4);
-    toChange.oldChildrenCost = toChange.childrenCost;
-    toChange.childrenCost = toChange.childrenCost + 100000;
-    toChange.oldCurrentCost = toChange.currentCost;
-    toChange.currentCost = toChange.currentCost + 100000;
-
-    toChange = old.find(x => x.id === 25);
-    toChange.oldChildrenCost = toChange.childrenCost;
-    toChange.childrenCost = toChange.childrenCost + 100000;
-    toChange.oldCurrentCost = toChange.currentCost;
-    toChange.currentCost = toChange.currentCost + 100000;
-
-    toChange = old.find(x => x.id === 167);
-    toChange.oldChildrenCost = toChange.childrenCost;
-    toChange.childrenCost = toChange.childrenCost + 10000;
-    toChange.oldCurrentCost = toChange.currentCost;
-    toChange.currentCost = toChange.currentCost + 10000;
-
-    toChange = old.find(x => x.id === 10);
-    toChange.oldChildrenCost = toChange.childrenCost;
-    toChange.childrenCost = toChange.childrenCost + 100000;
-    toChange.oldCurrentCost = toChange.currentCost;
-    toChange.currentCost = toChange.currentCost + 100000;
-    this.whatIfService.mockData.next(old);*/
+    this.dialogService.open(EditDialogComponent, {context: {item: this.item}})
+      .onClose.subscribe(data => {
+        if (!data) {
+          return;
+        }
+        this.whatIfService.updateNode(data).subscribe(
+          () => {
+            if (data.factStartDate) {
+              this.item.factStartDate = data.factStartDate;
+            }
+            if (data.newPlannedStartDate) {
+              this.item.newPlannedStartDate = data.newPlannedStartDate;
+            }
+            this.toastrService.show('Изменения сохранены', this.item.jobName, {
+              status: 'success',
+              destroyByClick: true,
+              duration: 2000,
+              hasIcon: true,
+              position: NbGlobalPhysicalPosition.TOP_RIGHT,
+            });
+          },
+          () => {
+            this.toastrService.show('Ошибка сохранения', this.item.jobName, {
+              status: 'danger',
+              destroyByClick: true,
+              duration: 2000,
+              hasIcon: true,
+              position: NbGlobalPhysicalPosition.TOP_RIGHT,
+            });
+          },
+        );
+      },
+    );
   }
 }

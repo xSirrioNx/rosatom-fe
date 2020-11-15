@@ -1,0 +1,19 @@
+<nb-card>
+  <nb-card-header>{{ item.jobName }}</nb-card-header>
+  <nb-card-body>
+    <form [formGroup]="form">
+      <div class="form-group">
+        <input formControlName="factStartDate" nbInput fullWidth id="factStartDate" [nbDatepicker]="factStartDate" placeholder="Фактическая дата начала">
+        <nb-datepicker #factStartDate></nb-datepicker>
+      </div>
+      <div class="form-group">
+        <input formControlName="newPlannedStartDate" nbInput fullWidth id="newPlannedStartDate" [nbDatepicker]="newPlannedStartDate" placeholder="Планируемая дата начала">
+        <nb-datepicker #newPlannedStartDate></nb-datepicker>
+      </div>
+    </form>
+  </nb-card-body>
+  <nb-card-footer>
+    <button class="cancel" size="small" nbButton matRipple status="danger" (click)="cancel()">Отменить</button>
+    <button nbButton matRipple status="success" size="small" (click)="submit()">Сохранить</button>
+  </nb-card-footer>
+</nb-card>

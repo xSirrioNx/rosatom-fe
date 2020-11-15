@@ -18,21 +18,10 @@ export class WhatIfComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  getData(item: any) {
-    return this.data.filter(x => x.parentIds.includes(item)).sort((a, b) =>
-      ((b.currentCost + b.childrenCost) / this.getLevelSum(b)) -
-      ((a.currentCost + a.childrenCost) / this.getLevelSum(a)));
-  }
-
-  getLevelSum(item: number) {
-    return this.getData(item).reduce((sum, x) => (sum + x.currentCost + x.childrenCost), 0);
-  }
-
   onDataFetched() {
     setTimeout(() =>
         document.getElementsByTagName('nb-card-body')[0].scrollTo(100000 * 100000, 100000 * 100000),
       100,
     );
-
   }
 }

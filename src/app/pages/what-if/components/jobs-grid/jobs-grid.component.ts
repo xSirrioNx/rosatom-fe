@@ -1,16 +1,17 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {WhatIfService} from '../../what-if.service';
 import {WorkDto} from '../../models/work.dto';
 import {LocalDataSource} from 'ng2-smart-table';
 import {StatusColumnComponent} from './status-column/status-column.component';
 import {DateColumnComponent} from './date-column/date-column.component';
+import {delay} from 'rxjs/operators';
 
 @Component({
   selector: 'ngx-jobs-grid',
   templateUrl: './jobs-grid.component.html',
   styleUrls: ['./jobs-grid.component.scss'],
 })
-export class JobsGridComponent implements OnInit {
+export class JobsGridComponent implements OnInit, AfterViewInit {
   @Input() parent: WorkDto;
   @Input() levelSum = 1;
   @Input() depthLevel;
@@ -78,17 +79,6 @@ export class JobsGridComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.whatIfService.getNodes(this.parent.id).subscribe(result => {
-      this.data = result;
-      if (result.length > 250) {
-        const levelCost = result.reduce((sum, next) => sum + next.totalCost, 0);
-        result.forEach(y => {
-          y.levelCost = levelCost;
-        });
-        this.source.load(result);
-      }
-      this.dataFetched.emit(null);
-    });
   }
 
   onOpenClick(item: WorkDto, e?) {
@@ -120,5 +110,21 @@ export class JobsGridComponent implements OnInit {
 
   onRowSelect($event: any) {
     this.onOpenClick($event.data);
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.whatIfService.getNodes(this.parent.id).subscribe(result => {
+        this.data = result;
+        if (result.length > 250) {
+          const levelCost = result.reduce((sum, next) => sum + next.totalCost, 0);
+          result.forEach(y => {
+            y.levelCost = levelCost;
+          });
+          this.source.load(result);
+        }
+        this.dataFetched.emit(null);
+      });
+    });
   }
 }

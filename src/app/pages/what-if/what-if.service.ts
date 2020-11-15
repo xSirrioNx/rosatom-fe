@@ -18,13 +18,25 @@ export class WhatIfService {
   }
 
   getNodes(id: string): Observable<WorkDto[]> {
+    this.loading.next(true);
     return this.httpClient.get<WorkDto[]>(`${environment.API_URL}/works?id=${id || ''}`)
       .pipe(
-        tap(() => this.loading.next(true)),
         map(result => {
           this.loading.next(false);
           return result.map(x => new WorkDto(x)).sort((a, b) => a.totalCost - b.totalCost);
         }),
+        catchError(() => {
+          this.loading.next(false);
+          return of([]);
+        }),
+      );
+  }
+
+  updateNode(data) {
+    this.loading.next(true);
+    return this.httpClient.patch(`${environment.API_URL}/works`, data)
+      .pipe(
+        tap(() => this.loading.next(false)),
         catchError(() => {
           this.loading.next(false);
           return of([]);
