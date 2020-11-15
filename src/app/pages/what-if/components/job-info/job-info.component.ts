@@ -51,6 +51,7 @@ export class JobInfoComponent implements OnInit {
               hasIcon: true,
               position: NbGlobalPhysicalPosition.TOP_RIGHT,
             });
+            this.whatIfService.needToUpdate.next();
           },
           () => {
             this.toastrService.show('Ошибка сохранения', this.item.jobName, {

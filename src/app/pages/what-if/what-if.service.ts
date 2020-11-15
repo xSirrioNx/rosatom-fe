@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable, of} from 'rxjs';
+import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {WorkDto} from './models/work.dto';
 import {environment} from '../../../environments/environment';
@@ -13,6 +13,7 @@ export class WhatIfService {
   loading: BehaviorSubject<boolean> = new BehaviorSubject(false);
   selected: BehaviorSubject<WorkDto> = new BehaviorSubject<WorkDto>(null);
   opened: BehaviorSubject<Partial<WorkDto>[]> = new BehaviorSubject<Partial<WorkDto>[]>([{id: null}]);
+  needToUpdate: Subject<void> = new Subject();
 
   constructor(private httpClient: HttpClient) {
   }

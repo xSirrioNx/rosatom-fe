@@ -4,7 +4,6 @@ import {WorkDto} from '../../models/work.dto';
 import {LocalDataSource} from 'ng2-smart-table';
 import {StatusColumnComponent} from './status-column/status-column.component';
 import {DateColumnComponent} from './date-column/date-column.component';
-import {delay} from 'rxjs/operators';
 
 @Component({
   selector: 'ngx-jobs-grid',
@@ -79,6 +78,9 @@ export class JobsGridComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.whatIfService.needToUpdate.subscribe(() => {
+      this.fetchData();
+    });
   }
 
   onOpenClick(item: WorkDto, e?) {
@@ -101,7 +103,7 @@ export class JobsGridComponent implements OnInit, AfterViewInit {
   }
 
   trackByFn(index, item) {
-    return item.id + item.currentCost; // unique id corresponding to the item
+    return item.id; // unique id corresponding to the item
   }
 
   isOpened(item: WorkDto) {
@@ -114,17 +116,21 @@ export class JobsGridComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     setTimeout(() => {
-      this.whatIfService.getNodes(this.parent.id).subscribe(result => {
-        this.data = result;
-        if (result.length > 250) {
-          const levelCost = result.reduce((sum, next) => sum + next.totalCost, 0);
-          result.forEach(y => {
-            y.levelCost = levelCost;
-          });
-          this.source.load(result);
-        }
-        this.dataFetched.emit(null);
-      });
+      this.fetchData();
+    });
+  }
+
+  private fetchData() {
+    this.whatIfService.getNodes(this.parent.id).subscribe(result => {
+      this.data = result;
+      if (result.length > 250) {
+        const levelCost = result.reduce((sum, next) => sum + next.totalCost, 0);
+        result.forEach(y => {
+          y.levelCost = levelCost;
+        });
+        this.source.load(result);
+      }
+      this.dataFetched.emit(null);
     });
   }
 }
