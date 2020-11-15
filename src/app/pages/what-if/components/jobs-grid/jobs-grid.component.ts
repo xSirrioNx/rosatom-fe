@@ -12,7 +12,7 @@ import {DateColumnComponent} from './date-column/date-column.component';
 })
 export class JobsGridComponent implements OnInit, AfterViewInit {
   @Input() parent: WorkDto;
-  @Input() levelSum = 1;
+  levelSum = 1;
   @Input() depthLevel;
   @Output() dataFetched: EventEmitter<any> = new EventEmitter();
   selected = this.whatIfService.selected;
@@ -120,17 +120,18 @@ export class JobsGridComponent implements OnInit, AfterViewInit {
     });
   }
 
-  getColor(item) {
-    const color = 'rgba(240, 52, 52, ' + item.totalCost / this.levelSum + ')';
+  getColor(item: WorkDto) {
+    const opacity = item.totalCost / this.levelSum > 0.7 ? 0.7 : item.totalCost / this.levelSum;
+    return 'rgba(240, 52, 52, ' + opacity + ')';
   }
 
   private fetchData() {
     this.whatIfService.getNodes(this.parent.id).subscribe(result => {
       this.data = result;
+      this.levelSum = result.reduce((sum, next) => sum + next.totalCost, 0);
       if (result.length > 250) {
-        const levelCost = result.reduce((sum, next) => sum + next.totalCost, 0);
         result.forEach(y => {
-          y.levelCost = levelCost;
+          y.levelCost = this.levelSum;
         });
         this.source.load(result);
       }
