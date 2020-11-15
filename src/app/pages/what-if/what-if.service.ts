@@ -24,11 +24,26 @@ export class WhatIfService {
       .pipe(
         map(result => {
           this.loading.next(false);
-          return result.map(x => new WorkDto(x)).sort((a, b) => a.totalCost - b.totalCost);
+          return result.map(x => new WorkDto(x)).sort((a, b) => b.totalCost - a.totalCost);
         }),
         catchError(() => {
           this.loading.next(false);
           return of([]);
+        }),
+      );
+  }
+
+  getMain() {
+    this.loading.next(true);
+    return this.httpClient.get<WorkDto>(`${environment.API_URL}/works/main`)
+      .pipe(
+        map(result => {
+          this.loading.next(false);
+          return new WorkDto(result);
+        }),
+        catchError(() => {
+          this.loading.next(false);
+          return of(null);
         }),
       );
   }

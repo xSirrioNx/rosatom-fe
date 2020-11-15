@@ -1,19 +1,20 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {WhatIfService} from '../../what-if.service';
-import {distinctUntilChanged} from 'rxjs/operators';
+import {distinctUntilChanged, takeUntil} from 'rxjs/operators';
 import {WorkDto} from '../../models/work.dto';
 import {NbDialogService, NbGlobalPhysicalPosition, NbToastrService} from '@nebular/theme';
 import {EditDialogComponent} from '../edit-dialog/edit-dialog.component';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'ngx-job-info',
   templateUrl: './job-info.component.html',
   styleUrls: ['./job-info.component.scss'],
 })
-export class JobInfoComponent implements OnInit {
-
+export class JobInfoComponent implements OnInit, OnDestroy {
   selected = this.whatIfService.selected;
   item: WorkDto;
+  private unsubscribe$: Subject<void> = new Subject();
 
   constructor(
     private whatIfService: WhatIfService,
@@ -24,10 +25,15 @@ export class JobInfoComponent implements OnInit {
 
   ngOnInit(): void {
     // this.whatIfService.mockData.subscribe(x => this.data = x);
-    this.selected.pipe(distinctUntilChanged()).subscribe(value => {
+    this.selected.pipe(distinctUntilChanged(), takeUntil(this.unsubscribe$)).subscribe(value => {
       this.item = value;
     });
 
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   onEditClick() {
@@ -36,7 +42,7 @@ export class JobInfoComponent implements OnInit {
         if (!data) {
           return;
         }
-        this.whatIfService.updateNode(data).subscribe(
+        this.whatIfService.updateNode(data).pipe(takeUntil(this.unsubscribe$)).subscribe(
           () => {
             if (data.factStartDate) {
               this.item.factStartDate = data.factStartDate;

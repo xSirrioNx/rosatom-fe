@@ -1,7 +1,12 @@
 <div class="full-height-content">
   <nb-card class="table-card" [nbSpinner]="loading | async" nbSpinnerStatus="danger">
     <nb-card-header>
-      Планирование
+      <div>Планирование</div>
+      <div>
+        <ng-container *ngIf="this.mainWork">
+          <b>Суммарная стоимость:</b> {{ this.mainWork.totalCost | currency:'':'' + 'у.е.' }}
+        </ng-container>
+      </div>
     </nb-card-header>
 
     <nb-card-body>

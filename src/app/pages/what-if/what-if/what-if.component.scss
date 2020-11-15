@@ -19,4 +19,9 @@
   nb-card-body {
     scroll-behavior: smooth;
   }
+
+  nb-card-header {
+    display: flex;
+    justify-content: space-between;
+  }
 }

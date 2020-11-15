@@ -1,16 +1,18 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {WhatIfService} from '../../what-if.service';
 import {WorkDto} from '../../models/work.dto';
 import {LocalDataSource} from 'ng2-smart-table';
 import {StatusColumnComponent} from './status-column/status-column.component';
 import {DateColumnComponent} from './date-column/date-column.component';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'ngx-jobs-grid',
   templateUrl: './jobs-grid.component.html',
   styleUrls: ['./jobs-grid.component.scss'],
 })
-export class JobsGridComponent implements OnInit, AfterViewInit {
+export class JobsGridComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() parent: WorkDto;
   levelSum = 1;
   @Input() depthLevel;
@@ -74,11 +76,13 @@ export class JobsGridComponent implements OnInit, AfterViewInit {
     },
   };
 
+  private unsubscribe$: Subject<void> = new Subject();
+
   constructor(private whatIfService: WhatIfService) {
   }
 
   ngOnInit(): void {
-    this.whatIfService.needToUpdate.subscribe(() => {
+    this.whatIfService.needToUpdate.pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
       this.fetchData();
     });
   }
@@ -121,7 +125,7 @@ export class JobsGridComponent implements OnInit, AfterViewInit {
   }
 
   getColor(item: WorkDto) {
-    const opacity = item.totalCost / this.levelSum > 0.7 ? 0.7 : item.totalCost / this.levelSum;
+    const opacity = item.totalCost / this.levelSum > 0.6 ? 0.6 : item.totalCost / this.levelSum;
     return 'rgba(240, 52, 52, ' + opacity + ')';
   }
 
@@ -137,5 +141,10 @@ export class JobsGridComponent implements OnInit, AfterViewInit {
       }
       this.dataFetched.emit(null);
     });
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }
